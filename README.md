@@ -1,86 +1,29 @@
-# Developer Portfolio Template 🚀
+# Srithin Chillamcharla, portfolio
 
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+Personal site for an AI Agent Engineer: LLM agents, RAG systems and full-stack SaaS.
 
-## What is this?
+Built with React, TypeScript, SCSS and GSAP (ScrollTrigger).
 
-This simple portfolio template is designed to showcase your past projects, career history, skill sets, and more.
+- **Theme**: a dark space scene in the character render's own palette (periwinkle, lavender, sand). A canvas starfield twinkles behind the whole page with the occasional shooting star, and small moons and asteroids drift in the hero. Each section has its own nebula tint.
+- **Character**: the 3D render as a still image, toned down by a tint layer masked to the cutout, flush with the hero's right and bottom edges.
+- With `prefers-reduced-motion`, the starfield is drawn once and nothing animates.
 
-View the [Demo](https://yujisatojr.github.io/react-portfolio-template/).
+## Run it
 
-**This template is free to use, and no attribution is required.** You can fork or download this repository to customize it for your own use. Please don't forget to leave a ⭐ if you like this portfolio!
+```bash
+npm install
+npm start        # http://localhost:3000
+npm run build    # production build in build/
+```
 
-![screenshot](./src/assets//images/screenshot.png)
+## Editing content
 
-## Features
+Everything you'd change lives in [`src/data/content.ts`](src/data/content.ts): profile links, projects, experience, skills and certifications.
 
-✅ Open source (free to use, no attribution required)  
-✅ Responsive design & mobile-friendly  
-✅ Supports both dark and light modes  
-✅ Highly customizable multi-component layout  
-✅ Built with modern technologies (React, TypeScript, JavaScript, and SCSS)  
+- Project screenshots: `src/assets/projects/`. A project with an `image` is shown as a large showcase, one without is a compact row.
+- Resume: `public/Srithin-Chillamcharla-Resume.pdf` (the hero's Resume button).
+- Character: `public/character/cutout.webp` (the cut-out render, 896x1200) and `portrait.jpg` (social preview image). If you swap the render for one with a different size, update the `aspect-ratio` values for `.portrait` and `.hero__figure` in `src/index.scss`.
 
-## Quick Setup
+## Deploy
 
-1. Ensure you have [Node.js](https://nodejs.org/) installed. Check your installation by running:
-
-    ```bash
-    node -v
-    ```
-
-2. In the project directory, install dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3. Start the development server:
-
-    ```bash
-    npm start
-    ```
-
-4. Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
-
-5. Customize the template by navigating to the `/src/components` directory. Modify texts, pictures, and other information as needed.
-
-The page will reload if you make edits, and you will see any lint errors in the console.
-
-If you are interested in creating a mockup image like the ones from the personal projects section, I recommend [Genmoo](https://gemoo.com/tools/browser-mockup-generator/). This website lets you generate sleek looking browser mockups for free.
-
-## Deployment
-
-You can choose your preferred service (e.g., [Netlify](https://www.netlify.com/), [Render](https://render.com/), [Heroku](https://www.heroku.com/)) for deployment. One of the easiest ways to host this portfolio is using GitHub Pages. Follow the instructions below for a production deploy.
-
-1. **Set Up GitHub Repository**
-
-    Create a new repository on GitHub for your portfolio app.
-
-2. **Configure `package.json`**
-
-    Edit the following properties in your `package.json` file:
-
-    ```json
-    {
-        "homepage": "https://yourusername.github.io/your-repo-name",
-        "scripts": {
-            "predeploy": "npm run build",
-            "deploy": "gh-pages -d build",
-            ...
-        }
-    }
-    ```
-
-    Replace `yourusername` with your GitHub username and `your-repo-name` with the name of your GitHub repository.
-
-3. **Deploy to GitHub Pages**
-
-    Run the following command to deploy your app:
-
-    ```bash
-    npm run deploy
-    ```
-
-4. **Access Your Deployed App**
-
-    After successfully deploying, you can access your app at `https://yourusername.github.io/your-repo-name`.
+It's a static build, so Vercel, Netlify or Cloudflare Pages work with the defaults (build command `npm run build`, output `build`). `public/_redirects` is included for Netlify. After deploying, put your domain into the `og:image` tag in `public/index.html` so link previews show the image.

@@ -1,115 +1,96 @@
-import React, { useRef, useState } from 'react';
-import '../assets/styles/Contact.scss';
-// import emailjs from '@emailjs/browser';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import TextField from '@mui/material/TextField';
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Check,
+  Copy,
+  EnvelopeSimple,
+  GithubLogo,
+  LinkedinLogo,
+} from "@phosphor-icons/react";
+import { profile } from "../data/content";
+import Portrait from "./Portrait";
 
 function Contact() {
+  const [copied, setCopied] = useState(false);
+  const timer = useRef<number>();
 
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
-  const [nameError, setNameError] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<boolean>(false);
-  const [messageError, setMessageError] = useState<boolean>(false);
-
-  const form = useRef();
-
-  const sendEmail = (e: any) => {
-    e.preventDefault();
-
-    setNameError(name === '');
-    setEmailError(email === '');
-    setMessageError(message === '');
-
-    /* Uncomment below if you want to enable the emailJS */
-
-    // if (name !== '' && email !== '' && message !== '') {
-    //   var templateParams = {
-    //     name: name,
-    //     email: email,
-    //     message: message
-    //   };
-
-    //   console.log(templateParams);
-    //   emailjs.send('service_id', 'template_id', templateParams, 'api_key').then(
-    //     (response) => {
-    //       console.log('SUCCESS!', response.status, response.text);
-    //     },
-    //     (error) => {
-    //       console.log('FAILED...', error);
-    //     },
-    //   );
-    //   setName('');
-    //   setEmail('');
-    //   setMessage('');
-    // }
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
   };
 
   return (
-    <div id="contact">
-      <div className="items-container">
-        <div className="contact_wrapper">
-          <h1>Contact Me</h1>
-          <p>Got a project waiting to be realized? Let's collaborate and make it happen!</p>
-          <Box
-            ref={form}
-            component="form"
-            noValidate
-            autoComplete="off"
-            className='contact-form'
-          >
-            <div className='form-flex'>
-              <TextField
-                required
-                id="outlined-required"
-                label="Your Name"
-                placeholder="What's your name?"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                error={nameError}
-                helperText={nameError ? "Please enter your name" : ""}
-              />
-              <TextField
-                required
-                id="outlined-required"
-                label="Email / Phone"
-                placeholder="How can I reach you?"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                error={emailError}
-                helperText={emailError ? "Please enter your email or phone number" : ""}
-              />
+    <>
+      <section className="contact" id="contact" aria-labelledby="contact-title">
+        <div className="contact__inner">
+          <div className="contact__copy" data-reveal>
+            <p className="contact__script" aria-hidden="true">
+              Let's talk
+            </p>
+            <h2 id="contact-title">
+              Building something with AI? I'd love to hear about it.
+            </h2>
+            <p className="contact__lede">
+              Open to AI engineering, agent and full-stack roles, and to
+              freelance SaaS builds.
+            </p>
+            <div className="contact__actions">
+              <a className="pill pill--solid" href={`mailto:${profile.email}`}>
+                <EnvelopeSimple size={18} weight="bold" />
+                <span className="contact__email">{profile.email}</span>
+                <span className="contact__email-short">Email me</span>
+              </a>
+              <button
+                type="button"
+                className="pill pill--outline"
+                onClick={copyEmail}
+                aria-live="polite"
+              >
+                {copied ? (
+                  <>
+                    <Check size={16} weight="bold" /> Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy size={16} weight="bold" /> Copy email
+                  </>
+                )}
+              </button>
             </div>
-            <TextField
-              required
-              id="outlined-multiline-static"
-              label="Message"
-              placeholder="Send me any inquiries or questions"
-              multiline
-              rows={10}
-              className="body-form"
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
-              error={messageError}
-              helperText={messageError ? "Please enter the message" : ""}
-            />
-            <Button variant="contained" endIcon={<SendIcon />} onClick={sendEmail}>
-              Send
-            </Button>
-          </Box>
+            <ul className="contact__links">
+              <li>
+                <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                  <LinkedinLogo size={18} /> LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href={profile.github} target="_blank" rel="noreferrer">
+                  <GithubLogo size={18} /> GitHub
+                </a>
+              </li>
+              <li>{profile.location}</li>
+            </ul>
+          </div>
+          <div className="contact__figure">
+            <Portrait alt="" />
+            </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <footer className="footer">
+        <p>
+          © {new Date().getFullYear()} {profile.name}
+        </p>
+        <p>Built with React, TypeScript and GSAP</p>
+      </footer>
+    </>
   );
 }
 
